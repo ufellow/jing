@@ -1,8 +1,10 @@
 import React , { Component } from 'react';
 import { CSSTransition } from 'react-transition-group'
+import axios from 'axios'
 import {
     RegistBox
 } from './style'
+import { registApi } from './../../api/index'
 class Regist extends Component {
     constructor(props) {
         super(props);
@@ -48,7 +50,6 @@ class Regist extends Component {
                         {this.state.toastText}
                     </div> 
                 </CSSTransition> 
-                  
             </RegistBox>
         )
     }
@@ -93,7 +94,8 @@ class Regist extends Component {
         if(name === '') {
             this.showToast('姓名不能为空');
             return false;
-        } else if (!/^1[1-9]\d{9}$/.test(phone)) {
+        } else if (phone === '') {
+            // !/^1[1-9]\d{9}$/.test(phone)
             this.showToast('手机格式不正确');
             return false;
         } else if (address === '') {
@@ -103,9 +105,36 @@ class Regist extends Component {
             this.showToast('店名不能为空');
             return false;
         } else {
-            alert('ok')
+            axios.post(registApi,{
+                name: name,
+                phone: phone,
+                address: address,
+                storename: shopName,
+                openid: 'openid'
+            },{
+                header: { "Content-Type": "application/x-www-form-urlencoded" }
+            },).then(res => {
+                console.log(res)
+                if(res.data.code === 0){
+                    this.showToast('申请成功');
+                    setTimeout(()=> {
+                        this.props.history.replace('/applysuccess');
+                    },2000);
+                    
+                }
+            },(err) => {
+                console.log(err)
+            })
+            
+            // axios.get(`${registApi}?name=${name}&phone=${phone}&address=${address}&storename=${shopName}&openid=openid`).then(res => {
+            //     console.log(res)
+            // },err => {
+            //     console.log(err)
+            // })
         }
     }
+
+    
 }
 
 export default Regist;

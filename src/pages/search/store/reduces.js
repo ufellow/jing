@@ -7,12 +7,12 @@ const defaultState = {
 
 export default (state = defaultState , action) => {
     if(action.type === actionTypes.REDUCER_FOOD_COUNT) {
-        action.food.count--;
+        action.food.num--;
         const newState = JSON.parse(JSON.stringify(state))
         return newState
     }
     if(action.type === actionTypes.ADD_FOOD_COUNT) {
-        action.food.count++;
+        action.food.num++;
         const newState = JSON.parse(JSON.stringify(state))
         return newState
     }

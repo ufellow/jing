@@ -12,12 +12,12 @@ export default (state = defaultState , action) => {
         return newState;
     }
     if(action.type === actionTypes.ADD_FOOD_COUNT) {
-        action.food.count++;
+        action.food.num++;
         const newState = JSON.parse(JSON.stringify(state))
         return newState
     }
     if(action.type === actionTypes.REDUCER_FOOD_COUNT) {
-        action.food.count--;
+        action.food.num--;
         const newState = JSON.parse(JSON.stringify(state))
         return newState
     }
@@ -26,7 +26,7 @@ export default (state = defaultState , action) => {
         const actionGoods = action.goods 
         for(let i=0;i<actionGoods.length;i++) {
             actionGoods[i].foods.forEach((food) => {
-                food.count = 0;
+                food.num = 0;
             })
         }
         newState.goods = actionGoods;

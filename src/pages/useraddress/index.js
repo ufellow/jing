@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {UserAddressBox, Toast} from './style'
-
+import {getAddressApi} from './../../api/index'
+import axios from 'axios'
 class UserAddress extends Component {
     constructor(props) {
         super(props);
@@ -63,7 +64,7 @@ class UserAddress extends Component {
       
     }
     // 删除地址
-    handleDeleteAddress(event){
+    handleDeleteAddress(index, event){
         const _this = this;
         if (_this.state.AddressArr.length==1) {
              this.setState({
@@ -79,16 +80,16 @@ class UserAddress extends Component {
                 })
             },3000) 
         }
-        const idx = event.target.getAttribute('data-idx');
-        console.log(idx);
-        const list = this.state.AddressArr
-        list.splice(idx,1);
-        this.setState({
-            AddressArr:list
-        })
+        // const idx = event.target.getAttribute('data-idx');
+        console.log(index);
+        // const list = this.state.AddressArr
+        // list.splice(index,1);
+        // this.setState({
+        //     AddressArr:list
+        // })
     }
     //设置默认地址
-    handleClickSelect=(event)=>{
+    handleClickSelect=(index)=>{
          
     }
    
@@ -109,22 +110,22 @@ class UserAddress extends Component {
                         .AddressArr
                         .map((item,index) => {
                             return (
-                                <li className='address-item' key={item.id} >
+                                <li className='address-item' key={item.addressid} >
                                         <div className="address-title">
-                                            <div className="address-name">{item.name}</div>
-                                            <div className="address-phone">{item.phone}</div>
+                                            <div className="address-name">{item.linkname}</div>
+                                            <div className="address-phone">{item.linkphone}</div>
                                         </div>
-                                         <div className='address-shopname'>{item.shopname}</div>
-                                        <div className='address-text'>{item.address}</div>
+                                         <div className='address-shopname'>{item.linkstorename}</div>
+                                        <div className='address-text'>{item.linkaddress}</div>
                                     <div className="address-operation">
                                         <div className="address-default">
                                             <div className='address-radio' >
-                                                <input type="radio" id={item.id} onClick={this.handleClickSelect.bind(this)}  checked={item.isSelected} name='address'/>
+                                                <input type="radio" id={item.id} onClick={this.handleClickSelect.bind(this)}  checked={item.default} name='address'/>
                                                 <label htmlFor={item.id}></label>
                                                 <span className='default-text'>设为默认</span>
                                             </div>
                                             <div className='address-delete'>
-                                                <i className='iconfont icon-shanchu' data-idx={index} onClick={this.handleDeleteAddress.bind(this)}></i>
+                                                <i className='iconfont icon-shanchu' data-idx={index} onClick={this.handleDeleteAddress.bind(this,index)}></i>
                                             </div>
                                             <Link to={`/user/useraddress/edit/?${item.id}`} className='address-edit'>
                                                 <i className='iconfont icon-unif012'></i>
@@ -146,6 +147,19 @@ class UserAddress extends Component {
                  <button className='add'  onClick={this.handleAddAddress.bind(this)}>添加地址</button>
             </UserAddressBox>
         )
+    }
+    componentDidMount(){
+        axios.post(getAddressApi,{
+           id: 1
+        }).then((res)=>{
+            console.log(res)
+            this.setState({
+                AddressArr: res.data
+            })
+        })
+        .catch((error)=>{
+            console.log(error)
+        })
     }
 }
 

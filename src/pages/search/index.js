@@ -66,12 +66,12 @@ class Search extends Component {
                                             <div className='cartcontrol'>
                                                 <CartcontrolBox>
                                                     {
-                                                        food.count <= 0 ? '' : <div className="cart-decrease" onClick={reduceFoodCount.bind(this,food,result)}  >
+                                                        food.num <= 0 ? '' : <div className="cart-decrease" onClick={reduceFoodCount.bind(this,food,result)}  >
                                                         <i className='inner iconfont icon-jianhao'></i>
                                                     </div>
                                                     }
                                                     {
-                                                        food.count <= 0 ? '' : <div className="cart-count">{food.count}</div>
+                                                        food.num <= 0 ? '' : <div className="cart-count">{food.num}</div>
                                                     }
                                                     <div className="crat-add iconfont icon-jiahao" onClick={addFoodCount.bind(this,food,result)} ></div>
                                                 </CartcontrolBox>

@@ -48,7 +48,7 @@ class Home extends Component {
             good
                 .foods
                 .forEach((food, index) => {
-                    if (food.count > 0) {
+                    if (food.num > 0) {
                         foods.push(food)
                     }
                 })
@@ -68,12 +68,13 @@ class Home extends Component {
         this
             .selectFoods()
             .forEach((food) => {
-                totalCount += food.count;
-                totalPrice += food.count * food.price;
+                totalCount += food.num;
+                totalPrice += food.num * food.price;
                 return (totalCount, totalPrice)
             })
             
         const { goods , addFoodCount , reduceFoodCount} = this.props;
+
         return (
             <div>
                 <SearchBox>
@@ -117,7 +118,7 @@ class Home extends Component {
                                                     return (
                                                         <li key={index} className='food-item'>
                                                             <div className='icon'>
-                                                                <img src={food.icon} alt='1'/>
+                                                                <img src={food.image} alt='1'/>
                                                             </div>
                                                             <div className="content">
                                                                 <h2 className='name'>{food.name}</h2>
@@ -131,7 +132,7 @@ class Home extends Component {
                                                                 </div>
                                                                 <div className="cartcontrol-wrapper">
                                                                     <CartcontrolBox>
-                                                                        {food.count > 0
+                                                                        {food.num > 0
                                                                             ? <div
                                                                                     className="cart-decrease"
                                                                                     onClick={reduceFoodCount
@@ -141,8 +142,8 @@ class Home extends Component {
                                                                                 </div>
                                                                             : ""
 }
-                                                                        {food.count > 0
-                                                                            ? <div className="cart-count">{food.count}</div>
+                                                                        {food.num > 0
+                                                                            ? <div className="cart-count">{food.num}</div>
                                                                             : ''
 }
                                                                         <div
@@ -228,14 +229,14 @@ class Home extends Component {
                                                 return (
                                                     <li key={index} className='food'>
                                                         <span className='name'>{food.name}</span>
-                                                        <span className='price'>{food.price * food.count}</span>
+                                                        <span className='price'>{food.price * food.num}</span>
                                                         <div className="cartcontrol-wrapper">
                                                             <CartcontrolBox>
                                                                 <div className="cart-decrease" onClick={reduceFoodCount
                                                                     .bind(this, food,goods)}>
                                                                     <i className='inner iconfont icon-jianhao'></i>
                                                                 </div>
-                                                                <div className="cart-count">{food.count}</div>
+                                                                <div className="cart-count">{food.num}</div>
                                                                 <div className="crat-add iconfont icon-jiahao" onClick={addFoodCount.bind(this,food,goods)}></div>
                                                             </CartcontrolBox>
                                                         </div>
